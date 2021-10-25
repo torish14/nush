@@ -47,4 +47,30 @@ card.on('change', (error) => {
 const submitButton = document.getElementById('payment-form-submit')
 
 // ボタンがクリックされたらアクション実行
-submitButton.addEventListener('click', function (event) {})
+submitButton.addEventListener('click', function (event) {
+  // Promise が返ってくるので then で処理を続ける
+  stripe
+    .createPaymentMethod('card', card)
+    .then(function (result) {
+      if (result.error) {
+        // エラー時の処理
+      } else {
+        // 成功した時の処理
+        // 支払いメソッドID をリクエストデータに詰める
+        order.paymentMethodId = result.paymentMethodId.id
+        // サーバーサイドに注文情報を送信する
+        // サーバーは http://localhost:3000/v1/order/payment に POST
+        fetch('http://localhost:3000/v1/order/payment', {
+          method: 'POST',
+          headers: { 'Content-TYpe': 'application/json' },
+          body: JSON.stringify(order),
+        })
+          .then(function (result) {
+            // HTTPレスポンスからボディの JSON を取り出して次のメソッドに引き渡す
+            return result.json()
+          })
+          .then(function (response) {})
+      }
+    })
+    .catch(function () {})
+})
