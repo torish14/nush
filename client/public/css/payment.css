@@ -1,0 +1,25 @@
+/* Stripe の input要素や注文ボタン、戻るボタン */
+.payment-form-container {
+  margin-top: 100px !important;
+}
+
+.payment-form-container h1 {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+/* スピナー */
+#payment-form-spinner {
+  margin: 20px;
+}
+
+#card-element {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+/* 戻るボタン */
+.other-action-container {
+  margin-top: 100px !important;
+}
