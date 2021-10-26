@@ -1,3 +1,7 @@
+// https://stripe.com/docs/payments/accept-a-payment#web-submit-payment
+
+//? elementsインスタンスを作成
+// キーがないとインスタンスを生成できない
 var stripe = Stripe('pk_test_xxx')
 var elements = stripe.elements()
 
@@ -20,6 +24,7 @@ var order = {
   paymentMethodId: null,
 }
 
+//? htmlロードに elementインスタンスを生成、マウント
 var style = {
   base: {
     color: '#32325d',
@@ -32,10 +37,12 @@ var card = elements.create('card', { style: style })
 // formタグ内の div にマウント（要素とアプリの紐付け）
 card.mount('#card-element')
 
+//? cardインスタンスの状態変更をハンドリング
 // クレジットカード情報の入力の正誤判定
 card.on('change', (error) => {
   // displayError に div要素を取得して代入
   const displayError = document.getElementById('card-errors')
+  // エラーがある場合、card-errors の div にエラーメッセージを生成
   if (error) {
     displayError.textContent = error.message
   } else {
@@ -43,13 +50,16 @@ card.on('change', (error) => {
   }
 })
 
+//? ボタンが押下された際に決済リクエストの送信、ハンドリング
 // 注文確定ボタンの DOM を取得する
 const submitButton = document.getElementById('payment-form-submit')
 
 // ボタンがクリックされたらアクション実行
 submitButton.addEventListener('click', function (event) {
+  // スピナーの表示
   displaySpinner()
 
+  // iframe経由でカード情報を送信し、サーバーサイドに決済処理を譲渡する
   // Promise が返ってくるので then で処理を続ける
   stripe
     .createPaymentMethod('card', card)
@@ -61,6 +71,7 @@ submitButton.addEventListener('click', function (event) {
         // 成功した時の処理
         // 支払いメソッドID をリクエストデータに詰める
         order.paymentMethodId = result.paymentMethodId.id
+
         // サーバーサイドに注文情報を送信する
         // サーバーは http://localhost:3000/v1/order/payment に POST
         fetch('http://localhost:3000/v1/order/payment', {
@@ -73,6 +84,7 @@ submitButton.addEventListener('click', function (event) {
             return result.json()
           })
           .then(function (response) {
+            // 正常終了、スピナーを閉じて戻るリンクの表示
             onComplete(response)
           })
       }
@@ -118,6 +130,7 @@ function shutdown() {
   hideButton()
 }
 
+//? 表示関連の関数
 // スピナーの非表示
 function hideSpinner() {
   document.querySelector('.spinner-border').classList.add('collapse')
