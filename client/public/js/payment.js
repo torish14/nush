@@ -48,12 +48,15 @@ const submitButton = document.getElementById('payment-form-submit')
 
 // ボタンがクリックされたらアクション実行
 submitButton.addEventListener('click', function (event) {
+  displaySpinner()
+
   // Promise が返ってくるので then で処理を続ける
   stripe
     .createPaymentMethod('card', card)
     .then(function (result) {
       if (result.error) {
         // エラー時の処理
+        onError()
       } else {
         // 成功した時の処理
         // 支払いメソッドID をリクエストデータに詰める
@@ -69,10 +72,14 @@ submitButton.addEventListener('click', function (event) {
             // HTTPレスポンスからボディの JSON を取り出して次のメソッドに引き渡す
             return result.json()
           })
-          .then(function (response) {})
+          .then(function (response) {
+            onComplete(response)
+          })
       }
     })
-    .catch(function () {})
+    .catch(function () {
+      onError()
+    })
 })
 
 // 決済処理が正常に終了した時
