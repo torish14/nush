@@ -94,6 +94,37 @@ submitButton.addEventListener('click', function (event) {
     })
 })
 
+//? 戻るボタンでリセット
+// ボタン要素の取得
+let returnButtonNormal = document.getElementById(
+  'return-button-normal'
+)
+let returnButtonError = document.getElementById('return-button-error')
+let returnButtonNotYet = document.getElementById(
+  'return-button-not-yet'
+)
+let returnButtonDefault = document.getElementById(
+  'return-button-default'
+)
+
+returnButtonNormal.addEventListener('click', reset)
+returnButtonError.addEventListener('click', reset)
+returnButtonNotYet.addEventListener('click', reset)
+returnButtonDefault.addEventListener('click', reset)
+
+function reset(event) {
+  // エラーメッセージの非表示
+  hideError()
+  // 成功メッセージの非表示
+  hideMessage()
+  hideNotYetMessage()
+  // 注文確定ボタンの出現
+  displayButton()
+
+  // Element#mount の呼び出し、input要素の出現
+  card.mount('#card-element')
+}
+
 // 決済処理が正常に終了した時
 function onComplete(response) {
   shutdown()
