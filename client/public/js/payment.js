@@ -74,3 +74,15 @@ submitButton.addEventListener('click', function (event) {
     })
     .catch(function () {})
 })
+
+// スピナーの非表示
+function hideSpinner() {
+  document.querySelector('.spinner-border').classList.add('collapse')
+}
+
+// スピナーの表示
+function displaySpinner() {
+  document
+    .querySelector('.spinner-border')
+    .classList.remove('collapse')
+}
