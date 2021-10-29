@@ -1,3 +1,5 @@
+TabNine:: version
+TabNine::semSemantic completion enabled.
 // https://stripe.com/docs/payments/accept-a-payment#web-submit-payment
 
 //? elementsインスタンスを作成
