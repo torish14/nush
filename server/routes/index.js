@@ -66,11 +66,13 @@ function generateResponse(paymentIntent) {
     case 'requires_source_action':
       response.paymentIntentStatus = 'requires_source_action'
       response.requiresAction = true
-      response.clientSecret = intent.client_secret
+      response.clientSecret = paymentIntent.client_secret
       break
+
     case 'requires_payment_method':
       response.paymentIntentStatus = 'requires_payment_method'
       break
+
     case 'requires_source':
       response.paymentIntentStatus = 'requires_source'
       response.error = {
