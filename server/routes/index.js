@@ -30,7 +30,7 @@ router.post('/v1/order/payment', async function (req, res, next) {
       use_stripe_sdk: useStripeSdk,
     }
 
-    intent = await stripe.paymentIntens.create(request)
+    intent = await stripe.paymentIntents.create(request)
   } else if (paymentIntentId) {
     intent = await stripe.paymentIntents.confirm(paymentIntentId)
   }
