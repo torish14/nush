@@ -35,13 +35,30 @@ router.post('/v1/order/payment', async function (req, res, next) {
     intent = await stripe.paymentIntents.confirm(paymentIntentId)
   }
 
-  let response = {
-    requiresAction: true,
-    clientSecret: '',
-    paymentIntentStatus: '',
+  const response = generateResponse(intent)
+
+  res.send(response)
+})
+
+function calculateAmount(items) {
+  let total = 0
+  for (let i = 0; i < items.length; i++) {
+    const current = items[i].amount * items[i].quantity
+    total += current
   }
 
-  switch (intent.status) {
+  return total
+}
+
+function generateResponse(paymentIntent) {
+  // レスポンスオブジェクトの初期化
+  let response = {
+    requiresAction: false,
+    clientSecret: '',
+    paymentIntentStatus: ' ',
+  }
+
+  switch (paymentIntent.status) {
     case 'requires_action':
       response.paymentIntentStatus = 'requires_action'
       break
