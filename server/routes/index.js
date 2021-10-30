@@ -81,28 +81,20 @@ function generateResponse(paymentIntent) {
         ],
       }
       break
+
     case 'succeeded':
       response.paymentIntentStatus = 'succeeded'
-      response.clientSecret = intent.client_secret
+      response.clientSecret = paymentIntent.client_secret
       break
+
     default:
       response.error = {
-        messages: ['システムエラーが発生しました'],
+        messages: ['システムエラーが発生しました。'],
       }
       break
   }
 
-  res.send(response)
-})
-
-function calculateAmount(items) {
-  let total = 0
-  for (let i = 0; i < items.length; i++) {
-    const current = items[i].amount * items[i].quantity
-    total += current
-  }
-
-  return total
+  return response
 }
 
 module.exports = router
