@@ -3,6 +3,8 @@ var router = express.Router()
 
 const stripe = require('stripe')('sk_test_xxx')
 
+const logger = require('../logger')
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.render('index', { title: 'Express' })
