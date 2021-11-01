@@ -11,6 +11,11 @@ router.get('/', function (req, res, next) {
 })
 
 router.post('/v1/order/payment', async function (req, res, next) {
+  logger.info(
+    'ルーターメソッドの処理を開始します。リクエスト：',
+    req.body
+  )
+
   const {
     paymentMethodId,
     paymentIntentId,
@@ -32,12 +37,21 @@ router.post('/v1/order/payment', async function (req, res, next) {
       use_stripe_sdk: useStripeSdk,
     }
 
+    logger.info('Stripe API を呼び出します。リクエスト：', request)
+
     intent = await stripe.paymentIntents.create(request)
+
+    logger.info('Stripe API を呼び出しました。レスポンス：', intent)
   } else if (paymentIntentId) {
     intent = await stripe.paymentIntents.confirm(paymentIntentId)
   }
 
   const response = generateResponse(intent)
+
+  logger.info(
+    'ルーターメソッドの処理を終了します。レスポンス：',
+    response
+  )
 
   res.send(response)
 })
