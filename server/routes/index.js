@@ -59,10 +59,10 @@ router.post('/v1/order/payment', async function (req, res, next) {
     res.send(response)
   } catch (e) {
     logger.error(
-      'ルーターメソッドの処理中にエラーが発生しました：',
+      'ルーターメソッドの処理中にエラーが発生しました。：',
       e
     )
-    const response = generateErrorResponse(e.messages)
+    const response = generateErrorResponse(e.message)
 
     res.status(500)
     res.send(response)
@@ -128,7 +128,7 @@ function generateResponse(paymentIntent) {
 
 function generateErrorResponse(error) {
   return {
-    errors: {
+    error: {
       messages: [error],
     },
   }
