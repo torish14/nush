@@ -4,7 +4,7 @@ TabNine::semSemantic completion enabled.
 
 //? elementsインスタンスを作成
 // キーがないとインスタンスを生成できない
-var stripe = Stripe('pk_test_xxx')
+var stripe = Stripe('pk_test_51JrOOdKkK17HWJlliWD1Ml9uQMyfLE7C1s0LexkBWfVTqnNLyfQEX7kDFkJQF91ZXJk5H7F3qfOav17esZJSZ0ws00dDiiav1C')
 var elements = stripe.elements()
 
 // 注文情報
