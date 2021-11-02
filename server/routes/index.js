@@ -126,4 +126,12 @@ function generateResponse(paymentIntent) {
   return response
 }
 
+function generateErrorResponse(error) {
+  return {
+    errors: {
+      messages: [error],
+    },
+  }
+}
+
 module.exports = router
