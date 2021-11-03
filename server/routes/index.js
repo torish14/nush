@@ -26,11 +26,11 @@ router.post('/v1/order/payment', async function (req, res, next) {
     useStripeSdk,
   } = req.body
 
-  const total = calculateAmount(req.body.items)
+  const total = calculateAmount(items)
 
   try {
     let intent
-    if (paymentMethodId) {
+    if (req.body.paymentMethodId) {
       const request = {
         amount: total,
         currency: currency,
