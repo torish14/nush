@@ -16,5 +16,5 @@ Content-Type: application/json
     }
   ],
   "currency": "jpy",
-  "paymentMethodId": "pm_card_visa"
+  "paymentMethodId": null
 }
