@@ -84,7 +84,7 @@ function generateResponse(paymentIntent) {
   let response = {
     requiresAction: false,
     clientSecret: '',
-    paymentIntentStatus: ' ',
+    paymentIntentStatus: '',
   }
 
   switch (paymentIntent.status) {
